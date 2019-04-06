@@ -1,4 +1,4 @@
-class CurrencyExchangesController < ApplicationController
+class CurrencyExchangesController < ApiController
   def show
     @currency_exchanges = CurrencyExchange.where({selected_currency: params[:id]})
     render json: @currency_exchanges
