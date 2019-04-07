@@ -57,7 +57,7 @@ class SearchView extends Component {
     const { value, suggestions } = this.state
 
     const inputProps = {
-      placeholder: 'Country',
+      placeholder: 'Input Country',
       value,
       onChange: this.onChange
     }
