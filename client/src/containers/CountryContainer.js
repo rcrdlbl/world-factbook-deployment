@@ -66,7 +66,6 @@ class CountryContainer extends Component {
           <div className="countryGlobe">
             <MapView className="MapView" mapCenter={this.state.countryInfo.latlng} />
             <ReactSVG src={reticle} svgClassName="reticle" />
-            />
           </div>
         </div>
         <div className="box box4">
