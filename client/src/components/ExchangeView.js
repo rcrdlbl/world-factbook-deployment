@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 class ExchangeView extends Component {
-
   render() {
     return (
       <div>
@@ -10,8 +9,8 @@ class ExchangeView extends Component {
         {!this.props.userCurrencyName && <p>~~~</p>}
         {this.props.userCurrencyName && <p>{this.props.userCurrencyName}</p>}
       </div>
-    )
+    );
   }
 }
 
-export default ExchangeView
+export default ExchangeView;

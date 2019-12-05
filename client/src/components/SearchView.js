@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import Autosuggest from 'react-autosuggest'
-import countryNames from '../static/country-names'
-
-
+import React, { Component } from "react";
+import Autosuggest from "react-autosuggest";
+import countryNames from "../static/country-names";
 
 const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
 
-  return inputLength === 0 ? [] : countryNames.filter(country =>
-    country.name.toLowerCase().slice(0, inputLength) === inputValue
-  );
-}
+  return inputLength === 0
+    ? []
+    : countryNames.filter(
+        country =>
+          country.name.toLowerCase().slice(0, inputLength) === inputValue
+      );
+};
 
 const getSuggestionValue = suggestion => suggestion.name;
 
@@ -19,50 +20,50 @@ const renderSuggestion = suggestion => (
   <div>
     {suggestion.name} -- {suggestion["alpha-3"]}
   </div>
-)
+);
 
 class SearchView extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      value: '',
+      value: "",
       suggestions: []
-    }
+    };
   }
 
   onChange = (event, { newValue }) => {
     this.setState({
       value: newValue
-    })
-  }
+    });
+  };
 
-  onSuggestionsFetchRequested =({value}) => {
+  onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: getSuggestions(value)
-    })
-  }
+    });
+  };
 
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: []
-    })
-  }
+    });
+  };
 
-  onSuggestionSelected = (event, {suggestion}) => {
-    const countryUrl = '/countries/' + suggestion['alpha-3']
-    window.location.replace(countryUrl)
-  }
+  onSuggestionSelected = (event, { suggestion }) => {
+    const countryUrl = "/countries/" + suggestion["alpha-3"];
+    window.location.replace(countryUrl);
+  };
 
   render() {
-    const { value, suggestions } = this.state
+    const { value, suggestions } = this.state;
 
     const inputProps = {
-      placeholder: 'Input Country',
+      placeholder: "Input Country",
       value,
       onChange: this.onChange
-    }
+    };
 
-      return (
+    return (
       <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -73,8 +74,8 @@ class SearchView extends Component {
         inputProps={inputProps}
         onSuggestionSelected={this.onSuggestionSelected}
       />
-    )
+    );
   }
 }
 
-export default SearchView
+export default SearchView;

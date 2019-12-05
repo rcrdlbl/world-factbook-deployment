@@ -1,35 +1,43 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { createCurrencyExchange, fetchExchanges } from '../redux/actions/visitActions'
-import CurrencyExchangeForm from '../components/CurrencyExchangeForm'
-import ExchangeView from '../components/ExchangeView'
-import PreviousExchange from '../components/PreviousExchange'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  createCurrencyExchange,
+  fetchExchanges
+} from "../redux/actions/visitActions";
+import CurrencyExchangeForm from "../components/CurrencyExchangeForm";
+import ExchangeView from "../components/ExchangeView";
+import PreviousExchange from "../components/PreviousExchange";
 
 class CurrencyExchangeContainer extends Component {
-
   state = {
-    userCurrencyName: ''
-  }
+    userCurrencyName: ""
+  };
 
   componentDidMount() {
-    this.props.fetchExchanges(this.props.currency[0].code)
+    this.props.fetchExchanges(this.props.currency[0].code);
   }
 
-  onCurrencyFormSubmit = (suggestion) => {
-    fetch(`https://restcountries.eu/rest/v2/alpha/${suggestion}`).then(response => response.json())
-    .then(data => {
-      this.setState({
-        userCurrencyName: data.currencies[0].name
-      })
-      this.props.createCurrencyExchange({selected_currency: this.props.currency[0].code, user_currency: data.currencies[0].code})
-    })
-  }
+  onCurrencyFormSubmit = suggestion => {
+    fetch(`https://restcountries.eu/rest/v2/alpha/${suggestion}`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          userCurrencyName: data.currencies[0].name
+        });
+        this.props.createCurrencyExchange({
+          selected_currency: this.props.currency[0].code,
+          user_currency: data.currencies[0].code
+        });
+      });
+  };
 
   renderPreviousExchanges() {
     if (!this.props.exchanges) {
-      return <p>No Previous Exchanges</p>
+      return <p>No Previous Exchanges</p>;
     } else {
-      return this.props.exchanges.map(exchange => <PreviousExchange key={exchange.id} exchange={exchange} />)
+      return this.props.exchanges.map(exchange => (
+        <PreviousExchange key={exchange.id} exchange={exchange} />
+      ));
     }
   }
 
@@ -41,30 +49,39 @@ class CurrencyExchangeContainer extends Component {
           <p>{this.props.currency[0].name}</p>
         </div>
         <div>
-          <ExchangeView userCurrencyName={this.state.userCurrencyName} exchange={this.props.exchange} />
-          <CurrencyExchangeForm onCurrencyFormSubmit={this.onCurrencyFormSubmit} />
+          <ExchangeView
+            userCurrencyName={this.state.userCurrencyName}
+            exchange={this.props.exchange}
+          />
+          <CurrencyExchangeForm
+            onCurrencyFormSubmit={this.onCurrencyFormSubmit}
+          />
         </div>
         <div className="exchangeHistory">
           <p>Exchange History</p>
           {this.renderPreviousExchanges()}
         </div>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     exchange: state.visits.exchange,
     exchanges: state.visits.exchanges
-  }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    createCurrencyExchange: (currencies) => dispatch(createCurrencyExchange(currencies)),
-    fetchExchanges: (countryCode) => dispatch(fetchExchanges(countryCode))
-  }
-}
+    createCurrencyExchange: currencies =>
+      dispatch(createCurrencyExchange(currencies)),
+    fetchExchanges: countryCode => dispatch(fetchExchanges(countryCode))
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrencyExchangeContainer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CurrencyExchangeContainer);
