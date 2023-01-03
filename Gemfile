@@ -50,6 +50,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem 'httparty', '~> 0.16.4'
+gem 'httparty', '~> 0.21.0'
 
 gem 'faker', '~> 1.9'
